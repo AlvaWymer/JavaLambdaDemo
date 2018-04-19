@@ -3,8 +3,10 @@ package com.amazonaws.lambda.handle;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSONObject;
+import com.amazonaws.lambda.dto.LoginInfo;
 import com.amazonaws.lambda.dto.RegisterInfo;
 import com.amazonaws.lambda.exception.RegisterException;
+import com.amazonaws.lambda.response.LoginResponse;
 import com.amazonaws.lambda.response.RegisterResponse;
 import com.amazonaws.lambda.service.impl.IRegisterService;
 import com.amazonaws.lambda.service.impl.RegisterServiceImpl;
@@ -13,12 +15,13 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
-public class LambdaFunctionHandler implements RequestHandler<RegisterInfo, RegisterResponse> {
+public class RegisterHandler implements RequestHandler<RegisterInfo, RegisterResponse> {
 
+  
     @Override
     public RegisterResponse handleRequest(RegisterInfo input, Context context) {
     	 LambdaLogger logger = context.getLogger();
-         logger.log("[[[[" + new Date() + "]]]]RegisterInfo: " + JSONObject.toJSONString(input));
+         logger.log("---register---[[[[" + new Date() + "]]]]RegisterInfo: " + JSONObject.toJSONString(input));
          if(!ValidateUtil.inputValidate(input)) {
              return new RegisterResponse(RegisterResponse.RESPONSE_CODE_ERROR,"register info error.");
          }
@@ -30,5 +33,4 @@ public class LambdaFunctionHandler implements RequestHandler<RegisterInfo, Regis
          }
          return new RegisterResponse(RegisterResponse.RESPONSE_CODE_SUCCESS,"register success.");
     }
-
 }
